@@ -12,7 +12,7 @@ class UpperTypeBoundsExampleSpec extends FlatSpec {
       def name: String
     }
 
-    abstract class Pet extends Animal {}
+    abstract class Pet extends Animal
 
     class Cat extends Pet {
       override def name: String = "Cat"
@@ -30,8 +30,13 @@ class UpperTypeBoundsExampleSpec extends FlatSpec {
       def pet: P = p
     }
 
-    val dogContainer = new PetContainer[Dog](new Dog)
-    val catContainer = new PetContainer[Cat](new Cat)
-    assert(1 === 1)
+    assertCompiles("""
+          val dogContainer = new PetContainer[Dog](new Dog)
+          val catContainer = new PetContainer[Cat](new Cat)
+          """)
+
+    /** should not compile
+      */
+    // val lionContainer = new PetContainer[Lion](new Lion)
   }
 }
