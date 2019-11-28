@@ -1,22 +1,27 @@
-/**
-  * IMPLICIT CONVERSIONS
-  */
-import org.scalatest.FlatSpec
+import org.scalatest.FunSpec
 
-class ImplicitConversionsExampleSpec extends FlatSpec {
+class ImplicitConversionsExampleSpec extends FunSpec {
 
-  case class Foo(i: Int)
+  describe("Implicit conversions") {
 
-  behavior of "Implicit conversions"
+    case class Foo(i: Int)
 
-  it should "throw compilation error if `implicit` not defined" in {
-    assertTypeError("Foo(3) + 1") // compilation-error (type mismatch)
-  }
+    describe("(when not defined)") {
+      it("should throw compilation error") {
+        assertTypeError(
+          "Foo(3) + 1"
+        ) // compilation-error (type mismatch)
+      }
+    }
 
-  it should "it should run automatically when needed otherwise" in {
-    implicit def fooToInt(foo: Foo): Int = foo.i
+    describe("(when defined)") {
+      it("should be converted automatically when needed") {
+        implicit def fooToInt(foo: Foo): Int = foo.i
 
-    // now the Foo is converted to Int automatically when needed
-    assert(Foo(3) + 1 === 4)
+        assert(
+          Foo(3) + 1 === 4
+        )
+      }
+    }
   }
 }

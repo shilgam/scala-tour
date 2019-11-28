@@ -1,22 +1,26 @@
-/**
-  * IMPLICIT PARAMETERS
+/** IMPLICIT PARAMETERS
   * http://daily-scala.blogspot.com/2010/04/implicit-parameters.html
   */
-import org.scalatest.FlatSpec
+import org.scalatest.FunSpec
 
-class ImplicitParametersExampleSpec extends FlatSpec {
+class ImplicitParametersExampleSpec extends FunSpec {
 
-  def p(implicit i: Int): Int = i
+  describe("Implicit parameter") {
 
-  implicit val v = 2
+    def p(implicit i: Int): Int = i
 
-  behavior of "Implicit parameter"
+    implicit val v: Int = 2
 
-  it should "be passed automatically if it not passed as usual" in {
-    assert(p === 2)
-  }
+    describe("(if not passed as usual)") {
+      it("should be passed automatically") {
+        assert(p === 2)
+      }
+    }
 
-  it should "be overridden by explicit declarations" in {
-    assert(p(1) === 1)
+    describe("(if passed)") {
+      it("should be overridden by explicit declarations") {
+        assert(p(1) === 1)
+      }
+    }
   }
 }
